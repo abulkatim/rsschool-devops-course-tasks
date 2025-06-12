@@ -1,0 +1,50 @@
+name: Terraform 
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  terraform-check:
+    name: Check of the Terraform format is correct
+    runs-on: ubuntu-22.04
+    steps:
+        - uses: actions/checkout@v4
+
+        - name: Terraform setup
+        - uses: hashicorp/setup-terraform@v3
+
+        - name: Check
+          run: terraform fmt -check	
+
+  terraform-plan:
+    name:  Terraform setup, init and plan
+    runs-on: ubuntu-22.04
+    steps:
+        - uses: actions/checkout@v4
+
+        - name: Terraform-setup
+        - uses: hashicorp/setup-terraform@v3
+
+        - name: Terraform initialization
+        - run: terraform init
+
+        - name: Terraformation planning
+          run: terraform plan
+          
+  terraform-apply:
+    name: Terraformation
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Terraform-setup
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform initialization
+      - run: terraform init
+      
+      - name : Terraform applying
+      - run: terraform apply --auto-approve
