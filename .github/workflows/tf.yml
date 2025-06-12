@@ -1,14 +1,16 @@
 name: Terraform 
-
+# on push/pr on the main brainch runs only
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+#needed permissions for aws
 permissions:
   id-token: write
   contents: read
+#to run it manually for tests
+workflow_dispatch: 
 
 jobs:
 
