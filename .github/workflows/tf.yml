@@ -39,15 +39,6 @@ jobs:
             role-to-assume: arn:aws:iam::972234612295:role/GithubActionsRole
             aws-region: eu-central-1
 
-        - name: Debug OIDC token
-          id: debug-oidc
-          uses: actions/github-script@v7
-          with:
-            script: |
-              const token = await core.getIDToken();
-              const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
-              console.log("OIDC token `sub` claim:", payload.sub);
-
         - name: Terraform initialization
           run: terraform init
 
