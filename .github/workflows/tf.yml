@@ -7,6 +7,14 @@ on:
     branches: [ "main" ]
 
 jobs:
+
+  aws-signin:
+      name: Configure AWS credentials via OIDC
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: arn:aws:iam::972234612295:role/GithubActionsRole
+        aws-region: us-east-1
+        
   terraform-check:
     name: Check of the Terraform format is correct
     runs-on: ubuntu-22.04
