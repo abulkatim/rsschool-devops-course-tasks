@@ -1,5 +1,3 @@
-# rsschool-devops-course-tasks
-
 Terraform Code Implementation (50 points)
 Code implemented
 Terraform code is created to configure the following:
@@ -31,3 +29,4 @@ Documentation (5 points)
 Document the infrastructure setup and usage in a README file.
 Submission (5 points)
 A GitHub Actions (GHA) pipeline is set up for the Terraform code [+]
+
