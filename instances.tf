@@ -1,7 +1,3 @@
-provider "aws" {
-  region = var.region
-}
-
 resource "aws_instance" "bastion" {
   ami                         = data.aws_ssm_parameter.debian12.value
   instance_type               = var.instance_type
