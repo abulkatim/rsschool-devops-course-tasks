@@ -1,7 +1,1 @@
-terraform {
-  backend "s3" {
-    bucket = "terraform-state-storage-bucket-us-east"
-    key    = "state.tfstate"
-    region = "us-east-1"
-  }
-}
+
