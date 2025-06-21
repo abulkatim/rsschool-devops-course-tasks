@@ -12,12 +12,12 @@ variable "instance_type" {
 
 variable "az1" {
   description = "availability zone 1"
-  type = string
-  default = "eu-central-1a"
+  type        = string
+  default     = "eu-central-1a"
 }
 
 variable "az2" {
   description = "availability zone 1"
-  type = string
-  default = "eu-central-1b"
+  type        = string
+  default     = "eu-central-1b"
 }

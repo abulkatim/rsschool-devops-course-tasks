@@ -3,15 +3,15 @@ provider "aws" {
 }
 
 resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
-  enable_dns_support = true
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_support   = true
   enable_dns_hostnames = true
-  tags = { Name = "main-vpc" }
+  tags                 = { Name = "main-vpc" }
 }
 
 resource "aws_internet_gateway" "inet_gw" {
   vpc_id = aws_vpc.main.id
-  tags = { Name = "main-igw" }
+  tags   = { Name = "main-igw" }
 }
 
 resource "aws_subnet" "public_1" {
@@ -19,7 +19,7 @@ resource "aws_subnet" "public_1" {
   cidr_block              = "10.0.1.0/24"
   availability_zone       = var.az1
   map_public_ip_on_launch = true
-  tags = { Name = "public-1" }
+  tags                    = { Name = "public-1" }
 }
 
 resource "aws_subnet" "public_2" {
@@ -27,26 +27,26 @@ resource "aws_subnet" "public_2" {
   cidr_block              = "10.0.2.0/24"
   availability_zone       = var.az2
   map_public_ip_on_launch = true
-  tags = { Name = "public-2" }
+  tags                    = { Name = "public-2" }
 }
 
 resource "aws_subnet" "private_1" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "192.168.1.0/24"
   availability_zone = var.az1
-  tags = { Name = "private-1" }
+  tags              = { Name = "private-1" }
 }
 
 resource "aws_subnet" "private_2" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "192.168.2.0/24"
   availability_zone = var.az2
-  tags = { Name = "private-2" }
+  tags              = { Name = "private-2" }
 }
 
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
-  tags = { Name = "public-rt" }
+  tags   = { Name = "public-rt" }
 }
 
 resource "aws_route" "public_internet_access" {
@@ -70,14 +70,14 @@ resource "aws_eip" "nat_eip" {
 }
 
 resource "aws_nat_gateway" "nat_gw" {
-  subnet_id     = aws_subnet.public_1.id 
+  subnet_id     = aws_subnet.public_1.id
   allocation_id = aws_eip.nat_eip.id
-  tags = { Name = "main-nat" }
+  tags          = { Name = "main-nat" }
 }
 
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
-  tags = { Name = "private-rt" }
+  tags   = { Name = "private-rt" }
 }
 
 resource "aws_route" "private_nat" {
