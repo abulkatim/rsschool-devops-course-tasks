@@ -1,0 +1,80 @@
+name: Terraform 
+# on push/pr on the main brainch runs and manual run
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch: 
+# Needed permissions for AWS
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+# Terraform check for validity
+  terraform-check:
+    runs-on: ubuntu-22.04
+    steps:
+        - uses: actions/checkout@v4
+
+        - name: Terraform setup
+          uses: hashicorp/setup-terraform@v3
+
+        - name: Check
+          run: terraform fmt -check	-recursive
+# Terraform initialization and planning
+  terraform-plan:
+    runs-on: ubuntu-22.04
+    needs: terraform-check
+    steps:
+        - uses: actions/checkout@v4
+
+        - name: Terraform setup
+          uses: hashicorp/setup-terraform@v3
+
+        - name: Auth into AWS
+          uses: aws-actions/configure-aws-credentials@v4
+          with:
+            role-to-assume: arn:aws:iam::972234612295:role/GithubActionsRole
+            aws-region: eu-central-1
+
+        - name: Terraform initialization
+          run: terraform init
+
+        - name: Terraformation planning
+          run: terraform plan
+# Applying terraform    
+  terraform-apply:
+    name: Terraformation
+    runs-on: ubuntu-22.04
+    needs: terraform-plan
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Terraform setup
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Auth into AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::972234612295:role/GithubActionsRole
+          aws-region: eu-central-1
+
+      - name: Terraform initialization
+        run: terraform init
+      
+      - name : Terraform applying
+        run: terraform apply --auto-approve
+# Auth for us-east region to push tfstate
+  push-state-to-s3:
+    runs-on: ubuntu-22.04
+    needs: terraform-apply
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Auth into AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::972234612295:role/GithubActionsRole
+          aws-region: us-east-1

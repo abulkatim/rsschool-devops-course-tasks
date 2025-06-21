@@ -1,3 +1,3 @@
 # rsschool-devops-course-tasks
 
-A repo for devops course
+A repo for devops tasks
