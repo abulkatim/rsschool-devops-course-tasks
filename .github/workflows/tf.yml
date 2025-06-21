@@ -2,9 +2,9 @@ name: Terraform
 # on push/pr on the main brainch runs and manual run
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "task_2" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "task_2" ]
   workflow_dispatch: 
 # Needed permissions for AWS
 permissions:
