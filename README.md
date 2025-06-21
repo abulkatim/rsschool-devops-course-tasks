@@ -25,7 +25,7 @@ Create a bastion host for secure access to the private subnets [+]
 NAT is implemented for private subnets (10 points) [+]
 Orginize NAT for private subnets in a simpler or cheaper way
 Instances in private subnets should be able to reach addresses outside the VPC [+]
-Documentation (5 points)
+Documentation (5 points) [-]
 Document the infrastructure setup and usage in a README file.
 Submission (5 points)
 A GitHub Actions (GHA) pipeline is set up for the Terraform code [+]
